@@ -1,6 +1,6 @@
 let w = 0, h = 0;
 const image = new Image();
-const opp = 174, adj = 420, hyp = 480;
+const opp = 242, adj = 420, hyp = 480;
 const triangleCanvas = new OffscreenCanvas(opp, adj);
 const hexagonCanvas = new OffscreenCanvas(2*hyp, 2*adj);
 
@@ -17,7 +17,7 @@ function pageLoad() {
     window.addEventListener("resize", fixSize);
     fixSize();
 
-    image.src = "Sbeve.jpg";
+    image.src = "maxresdefault.jpg";
     image.onload = () => window.requestAnimationFrame(redraw);
 
 }
@@ -28,7 +28,7 @@ let angle = 0;
 function redraw(timestamp) {
 
     if (lastTimestamp === 0) lastTimestamp = timestamp;
-    const frameLength = (timestamp - lastTimestamp) / 800;
+    const frameLength = (timestamp - lastTimestamp) / 700;
     lastTimestamp = timestamp;
 
     angle += frameLength/2;
@@ -52,7 +52,7 @@ function renderTriangle() {
     context.clearRect(0,0,opp,adj);
 
     context.fillStyle = 'white';
-    context.globalCompositeOperation="source-over";
+    context.globalCompositeOperation="source-in";
 
     context.beginPath();
     context.moveTo(0, 0);
@@ -61,7 +61,7 @@ function renderTriangle() {
     context.lineTo(0, 0);
     context.fill();
 
-    context.globalCompositeOperation="source-in";
+    context.globalCompositeOperation="source-out";
 
     context.save();
     context.translate(opp/2, adj/2)
@@ -82,11 +82,11 @@ function renderHexagon() {
 
         context.drawImage(triangleCanvas,0,0);
 
-        context.scale(-1,1);
+        context.scale(1,-1);
         context.drawImage(triangleCanvas,0,0);
-        context.scale(-1,1);
+        context.scale(1,-1);
 
-        context.rotate(Math.PI/4);
+        context.rotate(Math.PI/3);
 
     }
 
@@ -99,7 +99,7 @@ function renderKaleidoscope() {
     const canvas = document.getElementById('rotateyCanvas');
     const context = canvas.getContext('2d');
 
-    context.fillStyle = '#CD97E5';
+    context.fillStyle = 'black';
     context.fillRect(0,0,w,h);
 
     context.save();
